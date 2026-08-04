@@ -1,0 +1,33 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data folders (Strictly ignore raw and processed financial PDFs)
+data/01_raw/*
+data/02_parsed/*
+data/03_processed/*
+!data/**/.gitkeep
+
+# Model weights and Vector DBs
+*.pt
+*.pth
+*.bin
+*.h5
+chroma_db/
+data/04_vector_db/*
+src/models/saved_weights/*
+src/models/finbert_tncrm_weights/*
+*.pdf
+*.xlsx
+*.zip
+*.log

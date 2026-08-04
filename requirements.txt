@@ -1,0 +1,26 @@
+# --- Core Deep Learning & NLP ---
+torch>=2.0.0
+transformers>=4.30.0
+accelerate>=0.20.0
+scikit-learn>=1.2.0
+
+# --- Document Parsing (Replacing PyPDF2) ---
+# PyMuPDF is the fastest and most accurate for text geometry
+PyMuPDF>=1.22.0
+# Unstructured isolates paragraphs from tables and headers
+unstructured>=0.10.0
+pdf2image>=1.16.3
+pdfminer.six>=20221105
+
+# --- Data Processing & Streaming ---
+pandas>=2.0.0
+numpy>=1.24.0
+nltk>=3.8.1
+spacy>=3.5.0
+
+# --- RAG & Vector Database ---
+llama-index>=0.8.0
+chromadb>=0.4.0
+
+# --- Frontend Dashboard ---
+streamlit>=1.25.0
