@@ -24,3 +24,9 @@ chromadb>=0.4.0
 
 # --- Frontend Dashboard ---
 streamlit>=1.25.0
+plotly>=5.15.0
+
+# --- Additional Utilities & APIs ---
+google-genai>=0.1.0
+sentence-transformers>=2.2.0
+torchvision>=0.15.0

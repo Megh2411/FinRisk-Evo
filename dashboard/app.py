@@ -23,7 +23,7 @@ st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
     /* Global Styles */
-    html, body, [class*="css"] {
+    html, body, .stApp {
         font-family: 'Outfit', sans-serif;
         background-color: #080B10;
         color: #E2E8F0;
@@ -322,7 +322,7 @@ def main():
                 y='Category', 
                 orientation='h', 
                 color='Count',
-                colorscale='Viridis',
+                color_continuous_scale='Viridis',
                 template='plotly_dark'
             )
             fig_bar.update_layout(
