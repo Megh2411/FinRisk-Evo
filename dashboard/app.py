@@ -266,12 +266,12 @@ def main():
                             FRES: {row['fres']:.1f}
                         </span>
                     </div>
-                    <div style="font-size:0.9rem; color:#A0AEC0; margin-bottom:4px;"><b>FY24 (Baseline Context):</b></div>
-                    <div style="font-size:0.95rem; color:#CBD5E1; background:rgba(0,0,0,0.2); padding:8px 12px; border-radius:6px; margin-bottom:8px; border-left:3px solid #718096;">
+                    <div style="font-size:0.9rem; color:#94A3B8; margin-bottom:4px;"><b>FY24 (Baseline Context):</b></div>
+                    <div style="font-size:0.95rem; color:#FFFFFF; background:rgba(15, 23, 42, 0.85); padding:10px 14px; border-radius:6px; margin-bottom:8px; border-left:4px solid #64748B; line-height:1.5;">
                         {row['fy24']}
                     </div>
-                    <div style="font-size:0.9rem; color:#FCA5A5; margin-bottom:4px;"><b>FY25 (Target Escalation):</b></div>
-                    <div style="font-size:0.95rem; color:#FEE2E2; background:rgba(239,68,68,0.05); padding:8px 12px; border-radius:6px; border-left:3px solid #EF4444;">
+                    <div style="font-size:0.9rem; color:#F87171; margin-bottom:4px;"><b>FY25 (Target Escalation):</b></div>
+                    <div style="font-size:0.95rem; color:#FFFFFF; background:rgba(127, 29, 29, 0.45); padding:10px 14px; border-radius:6px; border-left:4px solid #EF4444; line-height:1.5;">
                         {row['fy25']}
                     </div>
                     <div style="font-size:0.8rem; color:#718096; margin-top:8px;">
