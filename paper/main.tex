@@ -1,4 +1,4 @@
-﻿\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
+\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
 
 %%%% Standard Packages
 \usepackage{graphicx}
@@ -299,28 +299,68 @@ The label distribution is imbalanced, particularly for \emph{Escalation} and \em
 The available artifacts support describing the system components and presenting qualitative examples after the authors manually verify each pair and its provenance. They do not yet support claims of 91.4\% F1, calibration superiority, 94.8\% layout-noise recall, 61.5\% corpus-wide filtering, cross-sector generalization, or an association with realized equity volatility. Those claims are omitted because the available files do not provide a valid, independently generated evaluation trace that reproduces them.
 
 \subsection{Exploratory score-output diagnostics}
-The available score export contains 149 pipeline-generated passage pairs. Figures~\ref{fig:fres-dist}--\ref{fig:fres-category} summarize the distribution of the system's current outputs and are included as descriptive diagnostics only. They do not constitute a retrieval benchmark, a validation of the FRES score, or evidence that assigned categories are correct. No independent relevance labels were available for this analysis, so we do not report Precision@\(k\), Recall@\(k\), nDCG, classification performance, calibration, or statistical significance. The plotted FRES values are outputs of the current heuristic pipeline and should not be interpreted as calibrated probabilities or verified measures of real-world risk.
+The available score export contains 149 pipeline-generated passage pairs.
+Figures~\ref{fig:fres-dist}--\ref{fig:fres-category} summarize the current
+outputs as descriptive diagnostics only. They do not validate the FRES score,
+assigned categories, or real-world risk.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.82\linewidth]{figures/fres_score_distribution.png}
-\caption{Distribution of pipeline-generated FRES scores across 149 scored passage pairs. This is descriptive output analysis, not an accuracy evaluation.}
+\caption{Distribution of pipeline-generated FRES scores.}
 \label{fig:fres-dist}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.82\linewidth]{figures/fres_vs_similarity.png}
-\caption{Exploratory relationship between the pipeline's similarity and FRES outputs. The plot describes current system behaviour and does not establish validity or calibration.}
+\caption{Similarity scores versus pipeline-generated FRES scores.}
 \label{fig:fres-similarity}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/fres_category_counts.png}
-\caption{Counts of pipeline-assigned categories. Parenthetical means are descriptive FRES averages within each category; category assignments have not been independently validated.}
+\caption{Counts of passage pairs by assigned pipeline category.}
 \label{fig:fres-category}
 \end{figure}
+
+\subsection{Preliminary retrieval evaluation}
+A preliminary retrieval comparison was conducted on 12 queries using three
+methods: BM25, TF-IDF, and Chroma retrieval followed by cross-encoder
+reranking. The pooled candidate set contained 180 ranked results, with
+ordinal relevance labels of 0 (irrelevant), 1 (partially relevant), and
+2 (relevant). Metrics were computed at rank 5 and macro-averaged across
+queries. Pooled recall uses the unique judged query--passage candidates
+returned by the evaluated methods as its denominator; it is not corpus-wide
+recall.
+
+\begin{table}[htbp]
+\centering
+\caption{Preliminary retrieval metrics, macro-averaged over 12 queries.}
+\label{tab:retrieval-metrics}
+\begin{tabular}{lrrr}
+\hline
+Metric & BM25 & TF-IDF & Chroma + Cross-Encoder \\
+\hline
+P@5 (partial or relevant) & 0.850 & 0.767 & \textbf{0.900} \\
+P@5 (fully relevant) & 0.350 & 0.383 & \textbf{0.500} \\
+nDCG@5 & 0.848 & 0.837 & \textbf{0.883} \\
+Pooled Recall@5 (partial or relevant) & 0.454 & 0.407 & \textbf{0.491} \\
+Pooled Recall@5 (fully relevant) & 0.382 & 0.400 & \textbf{0.649} \\
+\hline
+\end{tabular}
+\end{table}
+
+The cross-encoder pipeline achieved the highest aggregate values among the
+three compared methods on the reported metrics. In particular, its nDCG@5
+was 0.883, compared with 0.848 for BM25 and 0.837 for TF-IDF. These findings
+are preliminary: the evaluation uses only 12 queries, and the reported
+metrics depend on the supplied relevance judgements and candidate pool.
+The results do not establish corpus-wide recall, statistical significance,
+generalization to other report collections, or predictive validity for
+real-world corporate risk. Further evaluation should expand the query set,
+document the annotation protocol, and assess inter-annotator agreement.
 
 \subsection{Evaluation protocol required for a full empirical study}
 A defensible next evaluation should freeze the corpus version and sampling rules; preserve source PDF, page, and paragraph identifiers for every pair; obtain independent labels before adjudication; report class counts and per-class precision, recall, and F1; and compute uncertainty intervals at the company or report level rather than treating correlated paragraphs as independent observations. Any baseline must be run on the same held-out pairs, with its prediction file and configuration retained. Ablations should remove one component at a time while holding the data split fixed. Calibration metrics should be reported only when the model outputs probabilities and the reference labels are independently established. Financial-outcome analyses require a separately specified outcome, time window, and leakage-safe design.
