@@ -34,14 +34,14 @@ class MasterRiskPipeline:
         # Precompute Semantic Projection Anchor Vectors for Sentiment Polarity Fusion
         esc_anchors = [
             "financial risk escalated", 
-            "severe losses plummeted", 
-            "supply chain collapse strike", 
-            "debt capacity constraint", 
+            "severe losses intensified", 
+            "supply chain disruption", 
+            "debt capacity constraints", 
             "regulatory noncompliance penalty"
         ]
         mit_anchors = [
-            "financial growth improved", 
-            "record profit savings", 
+            "financial performance improved", 
+            "losses declined", 
             "successful product launch", 
             "stable compliance operations", 
             "strong strategic recovery"
@@ -95,12 +95,14 @@ class MasterRiskPipeline:
         
         # FRES Score Calculation: Gated by semantic similarity threshold,
         # scaled by semantic similarity gap, semantic severity projection, and Bayesian confidence
+        PHI_MAX = 0.229  # Calibration maximum observed on calibration corpus
         if sem_sim > 0.93:
             fres = 0.0
+            category = "GATED / STATUS QUO"
         else:
-            fres = mean_score * (1.1 - sem_sim) * severity_projection * conf_weight * 100.0
+            raw_fres = mean_score * (1.1 - sem_sim) * severity_projection * conf_weight
+            fres = min(100.0 * raw_fres / PHI_MAX, 100.0)
+            # Classify the risk type dynamically using the learned latent topic vector
+            category = classify_risk_type(fres, fy25_text, mu_25)
             
-        # Classify the risk type dynamically using the learned latent topic vector
-        category = classify_risk_type(fres, fy25_text, mu_25)
-        
         return fres, attn[0, 1, 0].item() * 100, conf, dispersion, sem_sim, category
