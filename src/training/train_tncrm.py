@@ -24,33 +24,6 @@ def load_and_prepare_data(file_path: str):
         lines = [line.strip() for line in f.readlines() if line.strip()]
     return Dataset.from_dict({"text": lines})
 
-def train_tncrm_finbert(input_file: str, output_dir: str):
-    print("Initializing Precision Engine (Module B)...")
-    
-    # 1. Load Base FinBERT Model and Tokenizer
-    model_checkpoint = "ProsusAI/finbert"
-    print(f"Downloading/Loading base model: {model_checkpoint}")
-    
-    # We suppress the warnings in production, but you know the new head is initializing
-    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
-    model = AutoModelForMaskedLM.from_pretrained(model_checkpoint)
-
-    # 2. Load the TNCRM Dataset
-    dataset = load_and_prepare_data(input_file)
-    print(f"Loaded dataset with {len(dataset)} sentences.")
-
-    # 3. Tokenize the dataset
-    def tokenize_function(examples):
-        return tokenizer(
-            examples["text"], 
-            padding="max_length", 
-            truncation=True, 
-            max_length=128, 
-            return_special_tokens_mask=True
-        )
-    
-    tokenized_dataset = dataset.map(tokenize_function, batched=True, remove_columns=["text"])
-
 class TNCRMDataCollator(DataCollatorForLanguageModeling):
     def __init__(self, tokenizer, magnitude_words, mlm_probability=0.15, target_probability=0.75, baseline_probability=0.10, **kwargs):
         super().__init__(tokenizer=tokenizer, mlm=True, mlm_probability=mlm_probability, **kwargs)

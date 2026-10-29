@@ -12,7 +12,7 @@ FinRisk-Evo is a research prototype for comparing narrative passages from consec
 - `src/rag_engine/`: ChromaDB baseline retrieval, cross-encoder reranking, optional Gemini explanations.
 - `src/build_baseline_index.py`: builds the named baseline index in `data/04_vector_db_v2`.
 - `src/compute_master_scores.py`: batch scoring and CSV diagnostics.
-- `src/run_pipeline.py`: pipeline orchestration.
+- `src/run_pipeline.py`: end-to-end command-line runner for the Mahindra FY2024?FY2025 comparison. It reuses processed JSON files, uses the prebuilt baseline index and local model artifacts, and writes a separate pipeline-scoring CSV. Use `--force-preprocess` to re-extract and preprocess both reports.
 - `src/training/`: model training scripts.
 - `tests/`: lightweight automated checks.
 - `paper/`: JIIS manuscript source and working draft.
