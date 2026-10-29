@@ -14,7 +14,7 @@ from src.rag_engine.llm_generator import RiskExplainerLLM
 from src.models.nvdm import NVDM
 
 # Load API key securely
-API_KEY = os.getenv("GEMINI_API_KEY", "[REDACTED_REVOKED_API_KEY]")
+API_KEY = os.getenv("GEMINI_API_KEY")
 
 st.set_page_config(page_title="FinRisk-Evo | Risk Terminal", layout="wide", page_icon="🛡️")
 
@@ -131,7 +131,7 @@ def get_nvdm_topics():
 
 def main():
     df = load_data()
-    llm = RiskExplainerLLM(API_KEY)
+    llm = RiskExplainerLLM(API_KEY) if API_KEY else None
 
     # --- SIDEBAR: PDF Operations & Configuration ---
     with st.sidebar:
@@ -398,9 +398,12 @@ def main():
             with col_b2:
                 st.markdown("#### AI Executive Risk Summary (RAG)")
                 if st.button("✨ Synthesize Summary", key="btn_rag_sum"):
-                    with st.spinner("Querying Gemini 2.5 Flash..."):
-                        summary = llm.generate_executive_summary(row['fy24'], row['fy25'], row['fres'])
-                        st.success(summary)
+                    if llm is None:
+                        st.warning("Set GEMINI_API_KEY in the environment to enable AI summaries.")
+                    else:
+                        with st.spinner("Querying Gemini 2.5 Flash..."):
+                            summary = llm.generate_executive_summary(row['fy24'], row['fy25'], row['fres'])
+                            st.success(summary)
                         
                 st.markdown("#### Neural News Validator (MNLI)")
                 # Simulate News Validator

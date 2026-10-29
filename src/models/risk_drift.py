@@ -10,6 +10,7 @@ from src.models.nvdm import NVDM
 from src.data_prep.text_pipeline import DualStreamProcessor
 from src.models.bigru_attn import TemporalRiskBiGRU
 from src.models.taxonomy import classify_risk_type
+from src.models.fres_scoring import SIMILARITY_GATE, calculate_fres
 
 class MasterRiskPipeline:
     def __init__(self, nvdm_weights, vectorizer_path, finbert_weights, bigru_weights):
@@ -69,8 +70,8 @@ class MasterRiskPipeline:
         inp = self.tokenizer(s2, return_tensors="pt", padding=True, truncation=True, max_length=128).to(self.device)
         with torch.no_grad(): sem_vec = self.finbert(**inp).last_hidden_state[:, 0, :]
         
-        mu = self.nvdm.fc_mu(self.nvdm.encoder(bow))
-        return torch.cat((top_vec, sem_vec), dim=1), mu, logvar, sem_vec
+        # NVDM.forward returns its latent mean as the second value; use it directly.
+        return torch.cat((top_vec, sem_vec), dim=1), top_vec, logvar, sem_vec
 
     def evaluate_temporal_risk(self, fy24_text, fy25_text):
         v24, _, _, sem_24 = self.get_fused_vector(fy24_text)
@@ -95,14 +96,13 @@ class MasterRiskPipeline:
         
         # FRES Score Calculation: Gated by semantic similarity threshold,
         # scaled by semantic similarity gap, semantic severity projection, and Bayesian confidence
-        PHI_MAX = 0.229  # Calibration maximum observed on calibration corpus
-        if sem_sim > 0.93:
+        if sem_sim > SIMILARITY_GATE:
             fres = 0.0
             category = "GATED / STATUS QUO"
         else:
-            raw_fres = mean_score * (1.1 - sem_sim) * severity_projection * conf_weight
-            fres = min(100.0 * raw_fres / PHI_MAX, 100.0)
-            # Classify the risk type dynamically using the learned latent topic vector
+            fres = calculate_fres(sem_sim, mean_score, severity_projection, conf_weight)
+            # The index-to-category mapping in taxonomy.py is manually specified,
+            # and the input is the NVDM latent mean (not a topic probability vector).
             category = classify_risk_type(fres, fy25_text, mu_25)
             
         return fres, attn[0, 1, 0].item() * 100, conf, dispersion, sem_sim, category

@@ -59,10 +59,10 @@ def compute_all_scores(target_json_path, output_csv_path):
         print("Warning: No matching results generated.")
         df = pd.DataFrame(columns=["fy24", "fy25", "fres", "attn_25", "confidence", "dispersion", "similarity", "category"])
     else:
+        # Keep pair-local FRES values from MasterRiskPipeline. Batch-wise min-max
+        # rescaling makes a pair's score depend on unrelated rows and breaks the
+        # documented fixed-normalization formula. Preserve zero-score gated pairs.
         df = pd.DataFrame(results)
-        df = df[df['fres'] > 0]
-        if not df.empty and df['fres'].max() != df['fres'].min():
-            df['fres'] = (df['fres'] - df['fres'].min()) / (df['fres'].max() - df['fres'].min()) * 100
         
     df.sort_values("fres", ascending=False).to_csv(output_csv_path, index=False)
     print(f"Saved master scores to: {output_csv_path}")

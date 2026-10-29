@@ -28,6 +28,7 @@ data/04_vector_db/*
 src/models/saved_weights/*
 src/models/finbert_tncrm_weights/*
 *.pdf
+!paper/main.pdf
 *.xlsx
 *.zip
 *.log

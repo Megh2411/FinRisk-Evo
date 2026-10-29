@@ -1,0 +1,197 @@
+\begin{thebibliography}{34}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\providecommand{\eprint}[2][]{\url{#2}}
+ \bibcommenthead
+
+\bibitem[{Araci(2019)}]{araci2019}
+Araci D (2019) {FinBERT}: Financial sentiment analysis with pre-trained
+  language models. arXiv preprint arXiv:190810063
+  \doi{10.48550/arXiv.1908.10063}
+
+\bibitem[{Bao and Datta(2014)}]{bao2014}
+Bao Y, Datta S (2014) Simultaneously discovering and quantifying risk types
+  from textual risk disclosures. Management Science 60(6):1371--1391.
+  \doi{10.1287/mnsc.2013.1812}
+
+\bibitem[{Beltagy et~al(2020)Beltagy, Peters, and
+  Cohan}]{beltagy2020longformer}
+Beltagy I, Peters ME, Cohan A (2020) Longformer: The long-document transformer.
+  arXiv preprint arXiv:200405150 \doi{10.48550/arXiv.2004.05150}
+
+\bibitem[{Biswas et~al(2025)Biswas, Bhuiyan, Mir, Rahman, Mridha, Islam, and
+  Watanobe}]{biswas2025}
+Biswas AK, Bhuiyan MSA, Mir MNH, et~al (2025) A dual output temporal
+  convolutional network with attention architecture for stock price prediction
+  and risk assessment. IEEE Access 13:53621--53639.
+  \doi{10.1109/ACCESS.2025.3551307}
+
+\bibitem[{Blei et~al(2003)Blei, Ng, and Jordan}]{blei2003}
+Blei DM, Ng AY, Jordan MI (2003) Latent {Dirichlet} allocation. Journal of
+  Machine Learning Research 3:993--1022
+
+\bibitem[{Campbell et~al(2014)Campbell, Chen, Dhaliwal, Lu, and
+  Steele}]{campbell2014}
+Campbell JL, Chen H, Dhaliwal DS, et~al (2014) The information content of
+  mandatory risk factor disclosures in corporate filings. Review of Accounting
+  Studies 19(1):396--455. \doi{10.1007/s11142-013-9258-3}
+
+\bibitem[{Chen et~al(2024)Chen, Boukouvalas, and Corizzo}]{chen2024}
+Chen P, Boukouvalas Z, Corizzo R (2024) A deep fusion model for stock market
+  prediction with news headlines and time series data. Neural Computing and
+  Applications 36(34):21229--21271. \doi{10.1007/s00521-024-10303-1}
+
+\bibitem[{Cho et~al(2014)Cho, van Merri{\"{e}}nboer, Gulcehre, Bahdanau,
+  Bougares, Schwenk, and Bengio}]{cho2014}
+Cho K, van Merri{\"{e}}nboer B, Gulcehre C, et~al (2014) Learning phrase
+  representations using {RNN} encoder-decoder for statistical machine
+  translation. In: Proceedings of the 2014 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP), pp 1724--1734, \doi{10.3115/v1/D14-1179}
+
+\bibitem[{Duan et~al(2024)Duan, Yan, and Zhang}]{duan2024}
+Duan G, Yan S, Zhang M (2024) A hybrid neural network model for sentiment
+  analysis of financial texts using topic extraction, pre-trained model, and
+  enhanced attention mechanism methods. IEEE Access 12:98207--98224.
+  \doi{10.1109/ACCESS.2024.3429150}
+
+\bibitem[{Dyer et~al(2017)Dyer, Lang, and Stice-Lawrence}]{dyer2017}
+Dyer T, Lang M, Stice-Lawrence L (2017) The evolution of 10-{K} textual
+  disclosure: Evidence from {Latent Dirichlet Allocation}. Journal of
+  Accounting and Economics 64(2--3):221--245.
+  \doi{10.1016/j.jacceco.2017.07.002}
+
+\bibitem[{Farhadi et~al(2025)Farhadi, Zamanifar, Alipour, Taheri, and
+  Asadolahi}]{farhadi2025}
+Farhadi A, Zamanifar A, Alipour A, et~al (2025) A hybrid lstm-gru model for
+  stock price prediction. IEEE Access 13:117594--117618.
+  \doi{10.1109/ACCESS.2025.3586558}
+
+\bibitem[{Filzen(2015)}]{filzen2015}
+Filzen JJ (2015) The information content of risk factor disclosures in
+  quarterly reports. Accounting Horizons 29(4):887--916.
+  \doi{10.2308/acch-51174}
+
+\bibitem[{Fisher et~al(2016)Fisher, Garnsey, and Hughes}]{fisher2016}
+Fisher IE, Garnsey MR, Hughes ME (2016) Natural language processing in
+  accounting, auditing and finance: A synthesis of the literature with a
+  roadmap for future research. Intelligent Systems in Accounting, Finance and
+  Management 23(3):157--214. \doi{10.1002/isaf.1386}
+
+\bibitem[{Gal and Ghahramani(2016)}]{gal2016}
+Gal Y, Ghahramani Z (2016) Dropout as a {Bayesian} approximation: Representing
+  model uncertainty in deep learning. In: Proceedings of the 33rd International
+  Conference on Machine Learning (ICML), pp 1050--1059
+
+\bibitem[{Hassan et~al(2019)Hassan, Hollander, van Lent, and
+  Tahoun}]{hassan2019}
+Hassan TA, Hollander S, van Lent L, et~al (2019) Firm-level political risk:
+  Measurement and effects. The Quarterly Journal of Economics
+  134(4):2135--2202. \doi{10.1093/qje/qjz021}
+
+\bibitem[{Hochreiter and Schmidhuber(1997)}]{hochreiter1997}
+Hochreiter S, Schmidhuber J (1997) Long short-term memory. Neural Computation
+  9(8):1735--1780. \doi{10.1162/neco.1997.9.8.1735}
+
+\bibitem[{Jung and Jang(2024)}]{jung2024}
+Jung HD, Jang B (2024) Enhancing financial sentiment analysis ability of
+  language model via targeted numerical change-related masking. IEEE Access
+  12:50809--50820. \doi{10.1109/ACCESS.2024.3385855}
+
+\bibitem[{Kingma and Welling(2014)}]{kingma2013}
+Kingma DP, Welling M (2014) Auto-encoding variational {Bayes}. In:
+  International Conference on Learning Representations (ICLR)
+
+\bibitem[{Kogan et~al(2009)Kogan, Levin, Routledge, Sagi, and
+  Smith}]{kogan2009}
+Kogan S, Levin D, Routledge B, et~al (2009) Predicting risk from financial
+  reports with regression. In: Proceedings of Human Language Technologies: The
+  2009 Annual Conference of the North American Chapter of the Association for
+  Computational Linguistics (NAACL-HLT), pp 272--280
+
+\bibitem[{Kravet and Muslu(2013)}]{kravet2013}
+Kravet T, Muslu O (2013) Textual risk disclosures and investors' risk
+  perceptions. Review of Accounting Studies 18(4):1088--1122.
+  \doi{10.1007/s11142-013-9228-9}
+
+\bibitem[{Li(2010)}]{li2010}
+Li F (2010) Textual analysis of corporate disclosures: A survey of the
+  literature. Journal of Accounting Literature 29:143--165
+
+\bibitem[{Linsley and Shrives(2006)}]{linsley2006}
+Linsley PM, Shrives PJ (2006) Risk reporting: a study of risk disclosures in
+  the annual reports of {UK} companies. The British Accounting Review
+  38(4):387--404. \doi{10.1016/j.bar.2006.05.002}
+
+\bibitem[{Liu et~al(2023)Liu, Wang, Yang, and Zha}]{li2023fingpt}
+Liu XY, Wang G, Yang H, et~al (2023) {FinGPT}: {Democratizing} internet-scale
+  data for financial large language models. arXiv preprint arXiv:230710485
+  \doi{10.48550/arXiv.2307.10485}
+
+\bibitem[{Loughran and McDonald(2011)}]{loughran2011}
+Loughran T, McDonald B (2011) When is a liability not a liability? textual
+  analysis, dictionaries, and 10-{Ks}. The Journal of Finance 66(1):35--65.
+  \doi{10.1111/j.1540-6261.2010.01625.x}
+
+\bibitem[{Miao et~al(2016)Miao, Yu, and Blunsom}]{miao2016}
+Miao Y, Yu L, Blunsom P (2016) Neural variational inference for text
+  processing. In: Proceedings of the 33rd International Conference on Machine
+  Learning, pp 1727--1736,
+  \urlprefix\url{https://proceedings.mlr.press/v48/miao16.html}
+
+\bibitem[{Mir et~al(2025)Mir, Bhuiyan, Rafi, Rodrigues, Mridha, Hamid, Monowar,
+  and Uddin}]{mir2025}
+Mir MNH, Bhuiyan MSM, Rafi MA, et~al (2025) Joint topic-emotion modeling in
+  financial texts: A novel approach to investor sentiment and market trends.
+  IEEE Access 13:28664--28677
+
+\bibitem[{Moodi et~al(2024)Moodi, Rafsanjani, Zarifzadeh, and
+  Chahooki}]{moodi2024}
+Moodi F, Rafsanjani AJ, Zarifzadeh S, et~al (2024) Fusion of technical
+  indicators and sentiment analysis in a hybrid framework of deep learning
+  models for stock price movement prediction. IEEE Access 12:195696--195709.
+  \doi{10.1109/ACCESS.2024.3519556}
+
+\bibitem[{Nogueira and Cho(2019)}]{nogueira2019}
+Nogueira R, Cho K (2019) Passage re-ranking with {BERT}. arXiv preprint
+  arXiv:190104085 \doi{10.48550/arXiv.1901.04085}
+
+\bibitem[{Reimers and Gurevych(2019)}]{reimers2019}
+Reimers N, Gurevych I (2019) Sentence-{BERT}: Sentence embeddings using
+  {Siamese} {BERT}-networks. In: Proceedings of the 2019 Conference on
+  Empirical Methods in Natural Language Processing and the 9th International
+  Joint Conference on Natural Language Processing (EMNLP-IJCNLP), pp
+  3982--3992, \doi{10.18653/v1/D19-1410}
+
+\bibitem[{Thawani et~al(2021)Thawani, Pujara, Ilievski, and
+  Szekely}]{thawani2021}
+Thawani A, Pujara J, Ilievski F, et~al (2021) Representing numbers in {NLP}: a
+  survey and a vision. In: Proceedings of the 2021 Conference of the North
+  American Chapter of the Association for Computational Linguistics: Human
+  Language Technologies (NAACL-HLT), pp 644--656,
+  \doi{10.18653/v1/2021.naacl-main.53}
+
+\bibitem[{Vaswani et~al(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez,
+  Kaiser, and Polosukhin}]{vaswani2017}
+Vaswani A, Shazeer N, Parmar N, et~al (2017) Attention is all you need. In:
+  Advances in Neural Information Processing Systems (NeurIPS), pp 5998--6008
+
+\bibitem[{Wallace et~al(2019)Wallace, Wang, Li, Singh, and
+  Gardner}]{wallace2019}
+Wallace E, Wang Y, Li S, et~al (2019) Do {NLP} models know numbers? {Probing}
+  numeracy in embeddings. In: Proceedings of the 2019 Conference on Empirical
+  Methods in Natural Language Processing and the 9th International Joint
+  Conference on Natural Language Processing (EMNLP-IJCNLP), pp 5307--5315,
+  \doi{10.18653/v1/D19-1534}
+
+\bibitem[{Wu et~al(2023)Wu, Irsoy, Lu, Dabravolski, Dredze, Gehrmann, Kambadur,
+  Rosenberg, and Mann}]{wu2023bloomberggpt}
+Wu S, Irsoy O, Lu S, et~al (2023) {BloombergGPT}: A large language model for
+  finance. arXiv preprint arXiv:230317564 \doi{10.48550/arXiv.2303.17564}
+
+\bibitem[{Yang et~al(2023)Yang, Liu, and Wang}]{yang2023fingpt}
+Yang H, Liu XY, Wang CD (2023) {FinGPT}: Open-source financial large language
+  models. arXiv preprint arXiv:230606031 \doi{10.48550/arXiv.2306.06031}
+
+\end{thebibliography}

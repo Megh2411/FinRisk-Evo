@@ -6,6 +6,7 @@ import torch
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.feature_extraction.text import CountVectorizer
+from pathlib import Path
 
 # Ensure Python can find the src module when running from the terminal
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -47,7 +48,7 @@ def train_topic_model(json_path: str, output_model_dir: str):
     # 4. Initialize the NVDM Model
     # We will use 20 latent topics. For a single annual report, 20 topics provides dense, readable clusters.
     N_TOPICS = 20
-    model = NVDM(vocab_size=VOCAB_SIZE, hidden_dim=500, n_topics=N_TOPICS)
+    model = NVDM(vocab_size=len(vectorizer.get_feature_names_out()), hidden_dim=500, n_topics=N_TOPICS)
     
     # Use Adam optimizer (standard for VAEs)
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
@@ -95,7 +96,6 @@ def train_topic_model(json_path: str, output_model_dir: str):
         print(f"Topic {k+1}: {', '.join(top_words)}")
 
 if __name__ == "__main__":
-    from pathlib import Path
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     PROCESSED_DIR = os.path.join(BASE_DIR, "data", "03_processed")
     MODEL_OUTPUT_DIR = os.path.join(BASE_DIR, "src", "models", "saved_weights")

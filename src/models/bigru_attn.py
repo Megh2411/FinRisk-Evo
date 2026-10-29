@@ -30,16 +30,27 @@ class TemporalRiskBiGRU(nn.Module):
         return self.fc_risk(context), attn_weights
 
     def predict_with_uncertainty(self, x, n_samples=10):
-        """Monte Carlo Dropout for Bayesian Confidence."""
-        self.train() # Keep dropout ON
+        """Return a stochastic mean score and a heuristic uncertainty proxy.
+
+        The returned confidence is not a calibrated probability. Restore the
+        model's prior mode after sampling so callers do not inherit train mode.
+        """
+        if n_samples < 2:
+            raise ValueError("n_samples must be at least 2")
+        was_training = self.training
+        self.train()  # Enable dropout for Monte Carlo sampling.
         scores, attns = [], []
-        for _ in range(n_samples):
-            with torch.no_grad():
-                logit, attn = self.forward(x)
-                scores.append(torch.sigmoid(logit))
-                attns.append(attn)
-        scores = torch.stack(scores)
-        mean_score = scores.mean().item()
-        confidence = (1.0 - scores.std().item()) * 100
-        mean_attn = torch.stack(attns).mean(dim=0)
-        return mean_score, confidence, mean_attn
+        try:
+            for _ in range(n_samples):
+                with torch.no_grad():
+                    logit, attn = self.forward(x)
+                    scores.append(torch.sigmoid(logit))
+                    attns.append(attn)
+            scores = torch.stack(scores)
+            mean_score = scores.mean().item()
+            # Population standard deviation is stable for small sample counts.
+            confidence = (1.0 - scores.std(unbiased=False).item()) * 100
+            mean_attn = torch.stack(attns).mean(dim=0)
+            return mean_score, confidence, mean_attn
+        finally:
+            self.train(was_training)
