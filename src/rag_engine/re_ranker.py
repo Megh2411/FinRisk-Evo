@@ -1,36 +1,82 @@
+﻿import re
 from sentence_transformers import CrossEncoder
 
+
 class RiskReRanker:
-    def __init__(self, model_name='cross-encoder/ms-marco-MiniLM-L-6-v2'):
-        # This model is specifically trained to calculate how well two sentences answer each other
+    def __init__(self, model_name="cross-encoder/ms-marco-MiniLM-L-6-v2"):
         print(f"Loading Neural Re-Ranker: {model_name}...")
         self.model = CrossEncoder(model_name)
 
-    def pick_best_match(self, query_fy25, candidates_fy24):
-        """
-        Takes the query and multiple results from ChromaDB.
-        Returns the single best matching text based on deep semantic interaction.
-        """
-        # Create pairs: [[query, doc1], [query, doc2]...]
-        pairs = [[query_fy25, doc] for doc in candidates_fy24]
-        
-        # Cross-encoders look at both sentences at once (much more accurate than vectors)
+    @staticmethod
+    def is_usable_candidate(text):
+        if not isinstance(text, str):
+            return False
+
+        text = text.strip()
+        words = re.findall(r"\b[\w'-]+\b", text)
+        alpha_words = [w for w in words if re.search(r"[A-Za-z]", w)]
+
+        if len(words) < 8 or len(alpha_words) < 6:
+            return False
+
+        lower = text.lower()
+        boilerplate = (
+            "table of contents",
+            "contents",
+            "dear sirs",
+            "dear sir/madam",
+            "notice is hereby given",
+        )
+        if any(lower.startswith(p) for p in boilerplate):
+            return False
+
+        # Filter highly numeric fragments, but retain short financial disclosures.
+        digit_count = sum(ch.isdigit() for ch in text)
+        alpha_count = sum(ch.isalpha() for ch in text)
+        if alpha_count and digit_count / alpha_count > 1.5:
+            return False
+
+        return True
+
+    def rank_candidates(self, query_text, candidates):
+        usable = []
+        for i, candidate in enumerate(candidates):
+            if self.is_usable_candidate(candidate):
+                usable.append((i, candidate))
+
+        if not usable:
+            return []
+
+        pairs = [[query_text, candidate] for _, candidate in usable]
         scores = self.model.predict(pairs)
-        
-        # Find the index of the highest score
-        best_idx = scores.argmax()
-        return candidates_fy24[best_idx], scores[best_idx]
+
+        ranked = [
+            {
+                "candidate_index": original_index,
+                "text": candidate,
+                "reranker_score": float(score),
+            }
+            for (original_index, candidate), score in zip(usable, scores)
+        ]
+        return sorted(
+            ranked,
+            key=lambda item: item["reranker_score"],
+            reverse=True,
+        )
+
+    def pick_best_match(self, query_text, candidates):
+        ranked = self.rank_candidates(query_text, candidates)
+        if not ranked:
+            return None, None
+        return ranked[0]["text"], ranked[0]["reranker_score"]
+
 
 if __name__ == "__main__":
-    # Test logic
-    ranker = RiskReRanker()
-    fy25 = "Mahindra ZEO is our new electric 4W vehicle with 21kWh battery."
-    top_5_fuzzy_matches = [
-        "Mahindra ESOP trust holds 1.04% shares.", # Bad match
-        "Our electric vehicle journey started in 2020.", # Decent match
-        "The company is focused on battery assembly lines.", # Good match
-        "Tractor sales grew by 5%.", # Irrelevant
-        "We are launching new passenger vehicles next year." # Generic
+    examples = [
+        "The company reported revenue of Rs. 1,000 crore during FY2025.",
+        "Our emissions declined after improvements to the manufacturing process.",
+        "Dear Sirs, please find attached the annual report.",
+        "Table of Contents Financial Highlights Risk Factors",
     ]
-    best, score = ranker.pick_best_match(fy25, top_5_fuzzy_matches)
-    print(f"\nBest Match Picked: {best}\nScore: {score}")
+    for example in examples:
+        print(RiskReRanker.is_usable_candidate(example), example)
