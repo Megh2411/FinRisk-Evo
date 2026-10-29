@@ -1,4 +1,4 @@
-\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
+﻿\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
 
 %%%% Standard Packages
 \usepackage{graphicx}
@@ -105,7 +105,7 @@ Mir et al. \cite{mir2025} & StockEmotions Dataset & VAE NVDM + FinBERT & Joint t
 Jung \& Jang \cite{jung2024} & Financial PhraseBank & TNCRM Masking List (193 words) & Numerical-change-aware masking for financial language & Downstream value in this pipeline remains untested. \\
 Farhadi et al. \cite{farhadi2025} & Tehran Stock Exchange & Hybrid LSTM-GRU technical model & Hybrid recurrent stock-price prediction & Focuses on price series rather than disclosure text. \\
 Biswas et al. \cite{biswas2025} & Visa \& MasterCard (2008--2024) & Dilated TCN with self-attention & Temporal convolution for price and risk-metric forecasting & Uses market series rather than paragraph-level annual-report alignment. \\
-BloombergGPT \cite{wu2023bloomberggpt} & Bloomberg Proprietary Dataset & 50B Decoder LLM & Finance-domain language model evaluated on finance tasks & Not a direct baseline for this prototype’s paragraph-pair task. \\
+BloombergGPT \cite{wu2023bloomberggpt} & Bloomberg Proprietary Dataset & 50B Decoder LLM & Finance-domain language model evaluated on finance tasks & Not a direct baseline for this prototypeâ€™s paragraph-pair task. \\
 FinGPT \cite{yang2023fingpt} & Financial News \& Social Media & Instruction-tuned LLaMA-7B & Open financial-language-model framework & Not evaluated here on the same held-out paragraph pairs. \\
 \bottomrule
 \end{tabular}%
@@ -284,7 +284,7 @@ BiGRU-attention & Input dimension & 788 \\
 \label{sec:case-study}
 
 \subsection{Scope of the available artifacts}
-The available project files contain annual-report PDFs and parsed or processed representations for Mahindra \& Mahindra (FY2024 and FY2025), Reliance Industries (FY2024 and FY2025), and Kotak Mahindra Bank (FY2025), plus a file named \texttt{Error-Clarification-Integrated-Annual-Report-2023-24.pdf}. The latter file’s identity and relevance have not been established, so it is excluded from the stated case-study scope. This is not evidence of a 20-company, 60-report corpus. Accordingly, claims about a 20-company corpus, leave-one-sector-out evaluation, sector-level generalization, or regression against realized equity volatility are not reported in this version.
+The available project files contain annual-report PDFs and parsed or processed representations for Mahindra \& Mahindra (FY2024 and FY2025), Reliance Industries (FY2024 and FY2025), and Kotak Mahindra Bank (FY2025), plus a file named \texttt{Error-Clarification-Integrated-Annual-Report-2023-24.pdf}. The latter fileâ€™s identity and relevance have not been established, so it is excluded from the stated case-study scope. This is not evidence of a 20-company, 60-report corpus. Accordingly, claims about a 20-company corpus, leave-one-sector-out evaluation, sector-level generalization, or regression against realized equity volatility are not reported in this version.
 
 The repository also contains a file containing 149 data rows named \texttt{master\_fres\_scores.csv}. A row count alone does not establish a valid evaluation set: the file includes pairs whose semantic relationship and category assignments require review, and some rows appear to be extraction or alignment errors. We therefore do not treat its scores as benchmark performance or use them to claim predictive validity. The file can be used as an exploratory debugging artifact while the pair-generation and scoring procedure is audited.
 
@@ -297,6 +297,30 @@ The label distribution is imbalanced, particularly for \emph{Escalation} and \em
 
 \subsection{What can currently be concluded}
 The available artifacts support describing the system components and presenting qualitative examples after the authors manually verify each pair and its provenance. They do not yet support claims of 91.4\% F1, calibration superiority, 94.8\% layout-noise recall, 61.5\% corpus-wide filtering, cross-sector generalization, or an association with realized equity volatility. Those claims are omitted because the available files do not provide a valid, independently generated evaluation trace that reproduces them.
+
+\subsection{Exploratory score-output diagnostics}
+The available score export contains 149 pipeline-generated passage pairs. Figures~\ref{fig:fres-dist}--\ref{fig:fres-category} summarize the distribution of the system's current outputs and are included as descriptive diagnostics only. They do not constitute a retrieval benchmark, a validation of the FRES score, or evidence that assigned categories are correct. No independent relevance labels were available for this analysis, so we do not report Precision@\(k\), Recall@\(k\), nDCG, classification performance, calibration, or statistical significance. The plotted FRES values are outputs of the current heuristic pipeline and should not be interpreted as calibrated probabilities or verified measures of real-world risk.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/fres_score_distribution.png}
+\caption{Distribution of pipeline-generated FRES scores across 149 scored passage pairs. This is descriptive output analysis, not an accuracy evaluation.}
+\label{fig:fres-dist}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/fres_vs_similarity.png}
+\caption{Exploratory relationship between the pipeline's similarity and FRES outputs. The plot describes current system behaviour and does not establish validity or calibration.}
+\label{fig:fres-similarity}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/fres_category_counts.png}
+\caption{Counts of pipeline-assigned categories. Parenthetical means are descriptive FRES averages within each category; category assignments have not been independently validated.}
+\label{fig:fres-category}
+\end{figure}
 
 \subsection{Evaluation protocol required for a full empirical study}
 A defensible next evaluation should freeze the corpus version and sampling rules; preserve source PDF, page, and paragraph identifiers for every pair; obtain independent labels before adjudication; report class counts and per-class precision, recall, and F1; and compute uncertainty intervals at the company or report level rather than treating correlated paragraphs as independent observations. Any baseline must be run on the same held-out pairs, with its prediction file and configuration retained. Ablations should remove one component at a time while holding the data split fixed. Calibration metrics should be reported only when the model outputs probabilities and the reference labels are independently established. Financial-outcome analyses require a separately specified outcome, time window, and leakage-safe design.
@@ -337,7 +361,7 @@ The authors have no competing interests to declare that are relevant to the cont
 Megh Doshi led system implementation and manuscript drafting. Shrey Dedhia and Dhruv Shah contributed to system development and project evaluation. Pramod Bide supervised the project and provided methodological review. All authors should verify this description and approve the final manuscript before submission.
 
 \subsection*{Data Availability}
-The exploratory case study is based on publicly accessible corporate annual reports. The three-annotator, 150-pair annotation exercise is described in this manuscript, but the labelled workbook and pair-level source provenance are not yet deposited as a stable, versioned public dataset. The original reports remain subject to their publishers’ terms. A public release of derived paragraph text and labels will be made only after the authors verify redistribution rights and complete provenance documentation; until then, the annotation data are not publicly available as a benchmark.
+The exploratory case study is based on publicly accessible corporate annual reports. The three-annotator, 150-pair annotation exercise is described in this manuscript, but the labelled workbook and pair-level source provenance are not yet deposited as a stable, versioned public dataset. The original reports remain subject to their publishersâ€™ terms. A public release of derived paragraph text and labels will be made only after the authors verify redistribution rights and complete provenance documentation; until then, the annotation data are not publicly available as a benchmark.
 
 \subsection*{Code Availability}
 The implementation source is hosted at \url{https://github.com/Megh2411/FinRisk-Evo}. The current public repository does not include the model checkpoints ignored by its Git configuration, so a fresh clone cannot reproduce inference until the checkpoints are lawfully released or retrained using documented instructions. The authors should tag the exact tested commit used for submission.
@@ -353,3 +377,4 @@ Not applicable. This manuscript does not contain any personal data or individual
 \bibliography{references}
 
 \end{document}
+
